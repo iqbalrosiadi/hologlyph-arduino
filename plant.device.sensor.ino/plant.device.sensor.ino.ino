@@ -64,10 +64,6 @@ DHT dht(DHTPIN, DHTTYPE);
 
 
 
-unsigned long myChannelNumber = 403006;
-const char * myWriteAPIKey = "M3W45JZQQNGN1PZO";
-
-
 /*************************************************************************/ 
 /**************************** SETUP **************************************/ 
 /*************************************************************************/ 
@@ -187,12 +183,7 @@ void loop()
   posting_data("5aaeddaa27461e82fda35ba9", String(temp));
   posting_data("5aaf91a01bad960014cbe1a0", String(LDR));
   posting_data("5aaf917f1bad960014cbe19f", String(humidity));
-  
-  //ThingSpeak.setField(1,temp);
-  //ThingSpeak.setField(2,humidity);
-  //ThingSpeak.setField(3,LDR);
-  // Write the fields that you've set all at once.
-  //ThingSpeak.writeFields(myChannelNumber, myWriteAPIKey);  
+ 
   
   
   // Sleep for a while
