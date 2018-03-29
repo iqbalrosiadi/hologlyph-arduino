@@ -67,6 +67,8 @@ DHT dht(DHTPIN, DHTTYPE);
 /*************************************************************************/ 
 /**************************** SETUP **************************************/ 
 /*************************************************************************/ 
+const int pinAdc = A0;
+
 void setup()
 {
   // Initialize the Bridge and the file system
@@ -80,8 +82,6 @@ void setup()
   Serial.begin(9600);
   TSL2561.init();
 
-  // Temp
-  dht.begin();
 
  
 }
@@ -89,40 +89,6 @@ void setup()
 /*************************************************************************/ 
 /**************************** LOOP ***************************************/ 
 /*************************************************************************/ 
-
-
-//
-// Temperature & humidity
-//
-void TempSensor(float &humidity, float &temp)
-{
-  // Reading temperature or humidity takes about 250 milliseconds!
-  // Sensor readings may also be up to A0 seconds 'old' (its a very slow sensor)
-  float h = dht.readHumidity();
-  float t = dht.readTemperature();
-  Serial.println("Come to this batch");
-  
-  // check if returns are valid, if they are NaN (not a number) then something went wrong!
-  if (isnan(t) || isnan(h))
-  {
-    Serial.println("Failed to read from DHT");
-
-    humidity = 0;
-    temp = 0;
-  }
-  else
-  {
-    Serial.print("Humidity: ");
-    Serial.print(h);
-    Serial.print(" %\t");
-    Serial.print("Temperature: ");
-    Serial.print(t);
-    Serial.println(" *C");
-
-    humidity = h;
-    temp = t;
-  }
-}
 
 //
 // This function return a string with the time stamp
@@ -173,16 +139,20 @@ void loop()
   long light = 0;
   int LDR = 0;
 
-  LDR = analogRead(A1);
-  Serial.print("Light Sensor: ");
-  Serial.println(LDR);
+  long sum = 0;
+    for(int i=0; i<32; i++)
+    {
+        sum += analogRead(pinAdc);
+    }
+
+    sum >>= 5;
+
+   Serial.println(sum);
+ 
   
-  // Read the sensors
-  TempSensor(humidity, temp);
-  
-  posting_data("5ab2896c4bed30243324c60f", String(temp));
-  posting_data("5ab27516cef85e23a330a151", String(LDR));
-  posting_data("5ab273a3d53b8f2348b0851e", String(humidity));
+  //posting_data("5ab2896c4bed30243324c60f", String(temp));
+  //posting_data("5ab27516cef85e23a330a151", String(LDR));
+  posting_data("5ab273a3d53b8f2348b0851e", String(sum));
  
   
   
