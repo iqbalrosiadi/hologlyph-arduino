@@ -35,8 +35,8 @@ DHT dht(DHTPIN, DHTTYPE);
     // Use WiFi
     #include <SPI.h>
     #include <WiFi101.h>
-    char ssid[] = "<YOURNETWORK>";    //  your network SSID (name) 
-    char pass[] = "<YOURPASSWORD>";   // your network password
+    char ssid[] = "BTHub4-5NFM";    //  your network SSID (name) 
+    char pass[] = "fd323be9e2";   // your network password
     int status = WL_IDLE_STATUS;
     WiFiClient  client;
   #elif defined(USE_ETHERNET_SHIELD)
